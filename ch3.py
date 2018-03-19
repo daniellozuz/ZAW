@@ -11,17 +11,13 @@ TRESHOLD = 10
 
 def frame_subtraction():
     """Object detection using frame subtraction."""
-    roi_start = 1
-    roi_end = 2050
+    true_positive, true_negative, false_positive, false_negative = 0, 0, 0, 0
     with open('src/images/office/temporalROI.txt') as in_file:
         line = in_file.readline()
-        roi_start, roi_end = map(int, line.split())
-    true_positive, true_negative, false_positive, false_negative = 0, 0, 0, 0
+    roi_start, roi_end = map(int, line.split())
+    groundtruth = cv2.imread('src/images/office/groundtruth/gt' + str(roi_start).zfill(6) + '.png')
     office = cv2.imread('src/images/office/input/in' + str(roi_start).zfill(6) + '.jpg', 0)
     previous_office = office
-    groundtruth = cv2.imread('src/images/office/groundtruth/gt' + str(roi_start).zfill(6) + '.png')
-    cv2.imshow('Office', office)
-    cv2.waitKey(SLEEP_TIME)
     for i in range(roi_start + 1, roi_end + 1, STEP):
         office = cv2.imread('src/images/office/input/in' + str(i).zfill(6) + '.jpg', 0)
         difference = cv2.absdiff(previous_office, office)
