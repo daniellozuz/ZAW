@@ -1,5 +1,5 @@
 """
-All exercises from the script.
+The 1st chapter.
 """
 
 import cv2
